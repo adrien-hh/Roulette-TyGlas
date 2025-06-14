@@ -1,0 +1,6 @@
+- S001 : Add Bob image
+- S002 : Alert to show result
+- S003 : Make it responsive
+- S004 : Add log file (+ menu on page)
+- S005 : Manage usage at the same time
+- S006 : DEPLOY
