@@ -2,9 +2,6 @@
 // combination: Array(3) [ "bar", "bar", "bar" ]
 // prize: "100"
 const spinButton = document.getElementById("spin");
-const result = document.getElementById('result');
-toggleVisibility(result);
-spinButton.after(result);
 spinButton.addEventListener('click', spin);
 let isSpinning = false;
 const symbols = [
@@ -27,16 +24,24 @@ async function fetchResult() {
         });
 
         const data = await response.json();
+        setTimeout(() => {
+            toggleVisibility("shadow");
+            toggleVisibility(data.prize);
+            document.addEventListener("click", function reset() {
+                toggleVisibility(data.prize);
+                toggleVisibility("shadow");
+                document.removeEventListener("click", reset);
+            });
+        }, 2000)
         console.log('Résultat du spin :', data);
-        toggleVisibility(result);
-        result.innerText = `Tu as gagné ${data.prize}`;
         return data;
     } catch (err) {
         console.error('Erreur lors de la requête POST :', err);
     }
 }
 
-function toggleVisibility(element) {
+function toggleVisibility(id) {
+    const element = document.getElementById(id);
     element.classList.toggle('hidden');
 }
 

@@ -70,6 +70,6 @@ app.post('/spin', async (req, res) => {
 
     res.json({
         combination: combination,
-        prize: reward ? reward.reward : "perdu"
+        prize: reward ? reward.combination : "perdu"
     });
 });
