@@ -10,6 +10,10 @@ app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/f
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Connected to MongoDB Atlas'))
+    .catch(err => console.error(err));
+
 function generateReward(rewards) {
     const availableRewards = rewards.filter(reward => reward.quantity > 0);
     const totalWeight = availableRewards.reduce((sum, reward) => sum + reward.weight, 0);
@@ -50,28 +54,20 @@ app.get('/', function (req, res) {
 
 app.post('/spin', async (req, res) => {
 
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('Connected to MongoDB Atlas');
-
-    const rewards = await Reward.find({});
+    const rewards = await Reward.find({ quantity: { $gt: 0 } });
     console.log('Rewards in DB : ', rewards);
     const symbols = ['biere', 'cafe', 'volant', 'crepe', 'buvette'];
 
-    const reward = generateReward(rewards);
+    const reward = await selectRewardAndDecrement(rewards);
     console.log('generateReward(rewards) : ', reward);
     const combination = generateSpinResult(reward, symbols);
     console.log('generateSpinResult(reward, symbols) : ', combination);
 
     logResult(reward);
 
-    if (reward) {
-        reward.quantity -= 1;
-        await reward.save();
-    }
-
     res.json({
         combination: combination,
-        prize: reward ? reward.combination : "perdu"
+        prize: reward ? reward?.combination : "perdu"
     });
 });
 
@@ -84,4 +80,25 @@ function logResult(reward) {
             console.error(err);
         }
     });
+}
+
+async function selectRewardAndDecrement(rewards) {
+
+    while (rewards.length > 0) {
+        const reward = generateReward(rewards);
+        if (!reward) return null;
+
+        const updatedReward = await Reward.findOneAndUpdate(
+            { _id: reward._id, quantity: { $gt: 0 } },
+            { $inc: { quantity: -1 } },
+            { new: true }
+        );
+
+        if (updatedReward) {
+            return updatedReward;
+        } else {
+            rewards = rewards.filter(r => !r._id.equals(reward._id));
+        }
+    }
+    return null;
 }
