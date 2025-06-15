@@ -16,7 +16,7 @@ let spinningIntervals = [];
 
 async function fetchResult() {
     try {
-        const response = await fetch('http://localhost:3000/spin', {
+        const response = await fetch('/spin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
