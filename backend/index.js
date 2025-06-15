@@ -2,13 +2,12 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Reward = require('./models/Reward');
 const express = require('express');
+const fs = require('node:fs');
 const app = express();
 app.use(express.json());
 app.listen(3000, () => console.log('Server launched on port 3000'));
-
-// View engine setup
+app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free'));
 app.set('view engine', 'ejs');
-
 app.use(express.static('public'));
 
 function generateReward(rewards) {
@@ -63,6 +62,8 @@ app.post('/spin', async (req, res) => {
     const combination = generateSpinResult(reward, symbols);
     console.log('generateSpinResult(reward, symbols) : ', combination);
 
+    logResult(reward);
+
     if (reward) {
         reward.quantity -= 1;
         await reward.save();
@@ -73,3 +74,14 @@ app.post('/spin', async (req, res) => {
         prize: reward ? reward.combination : "perdu"
     });
 });
+
+function logResult(reward) {
+    const now = new Date();
+    const time = now.toLocaleTimeString("fr-FR");
+    const content = `${time} ; récompense : ${reward.reward}\n`;
+    fs.appendFile('./public/logs/tirages.txt', content, err => {
+        if (err) {
+            console.error(err);
+        }
+    });
+}

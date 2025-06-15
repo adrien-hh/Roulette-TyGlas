@@ -30,7 +30,7 @@ img {
 }
 
 #titre {
-    height: 10%;
+    height: 10vh;
     z-index: 1;
     position: relative;
 }
@@ -108,7 +108,7 @@ img {
 
 #spin {
     display: inline-block;
-    height: 10%;
+    height: 10vh;
 }
 
 #spin>img {
@@ -151,6 +151,22 @@ img {
     pointer-events: none;
 }
 
+#logs {
+    border-radius: 50%;
+
+    color: white;
+    padding: 5px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: black;
+}
+
+#logs>i {
+    width: 20px;
+    height: 20px;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media screen and (min-width: 576px) {
     :root {
@@ -160,21 +176,21 @@ img {
         justify-content: space-evenly;
     }
     #titre {
-        height: 15%;
+        height: 15vh;
     }
     #div-roulette {
-        height: 65vh;
-        margin: 1rem auto;
+        height: 60vh;
+        margin: 0 auto;
     }
     #roulette {
         height: 100%;
     }
     .slots-container {
-        top: 38vh;
-        width: 60vh;
+        top: 36vh;
+        width: 55vh;
     }
     #spin {
-        height: 15%;
+        height: 12vh;
     }
     #spin>img {
         height: 100%;
@@ -191,10 +207,10 @@ img {
 /* Large devices (desktops, 992px and up) */
 @media screen and (min-width: 992px) {
     #titre {
-        height: 18%;
+        height: 18vh;
     }
     #spin {
-        height: 12%;
+        height: 12vh;
     }
     .result {
         width: 70vw;
@@ -210,11 +226,10 @@ img {
         justify-content: space-evenly;
     }
     #titre {
-        height: 25%;
+        height: 18vh;
     }
     #div-roulette {
         height: 55vh;
-        margin: 1rem auto;
     }
     #roulette {
         height: 100%;
@@ -224,7 +239,7 @@ img {
         width: 50vh;
     }
     #spin {
-        height: 15%;
+        height: 13vh;
     }
     .result {
         top: 50%;
