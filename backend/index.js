@@ -5,7 +5,7 @@ const express = require('express');
 const fs = require('node:fs');
 const app = express();
 app.use(express.json());
-app.listen(3000, () => console.log('Server launched on port 3000'));
+app.listen(process.env.port || 3000, () => console.log('Server launched on port 3000'));
 app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free'));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
