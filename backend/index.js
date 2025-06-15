@@ -4,6 +4,7 @@ const Reward = require('./models/Reward');
 const express = require('express');
 const fs = require('node:fs');
 const app = express();
+const path = require('path');
 app.use(express.json());
 app.listen(process.env.port || 3000, () => console.log('Server launched on port 3000'));
 app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free'));
@@ -13,6 +14,15 @@ app.use(express.static('public'));
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Connected to MongoDB Atlas'))
     .catch(err => console.error(err));
+
+const logPath = path.join(__dirname, 'public', 'logs', 'tirages.txt');
+fs.writeFile(logPath, '', err => {
+    if (err) {
+        console.error('Erreur lors de la réinitialisation du fichier de log :', err);
+    } else {
+        console.log('Fichier de log réinitialisé au démarrage.');
+    }
+});
 
 function generateReward(rewards) {
     const availableRewards = rewards.filter(reward => reward.quantity > 0);
@@ -75,7 +85,7 @@ function logResult(reward) {
     const now = new Date();
     const time = now.toLocaleTimeString("fr-FR");
     const content = `${time} ; récompense : ${reward.reward}\n`;
-    fs.appendFile('./public/logs/tirages.txt', content, err => {
+    fs.appendFile(logPath, content, err => {
         if (err) {
             console.error(err);
         }
