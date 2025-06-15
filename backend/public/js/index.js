@@ -4,12 +4,13 @@
 const spinButton = document.getElementById("spin");
 spinButton.addEventListener('click', spin);
 let isSpinning = false;
+const root = document.documentElement;
 const symbols = [
     { name: 'biere', offset: 0 },
-    { name: 'cafe', offset: 150 },
-    { name: 'volant', offset: 300 },
-    { name: 'crepe', offset: 450 },
-    { name: 'buvette', offset: 600 }
+    { name: 'cafe', offset: getSymbolHeight() },
+    { name: 'volant', offset: 2 * getSymbolHeight() },
+    { name: 'crepe', offset: 3 * getSymbolHeight() },
+    { name: 'buvette', offset: 4 * getSymbolHeight() }
 ];
 let spinningIntervals = [];
 
@@ -73,7 +74,8 @@ function spinSlot(slot) {
 
     let index = 0;
     const interval = setInterval(() => {
-        strip.style.transform = `translateX(-50%) translateY(-${index * 150}px)`;
+        const symbolHeight = getSymbolHeight();
+        strip.style.transform = `translateX(-50%) translateY(-${index * symbolHeight}vh)`;
         strip.style.transition = 'transform 0.1s linear';
         index = (index + 1) % symbols.length;
     }, 100);
@@ -116,7 +118,7 @@ function stopSlot(slot, targetSymbol, isLast, slotIndex) {
 
     setTimeout(() => {
         strip.style.transition = 'transform 0.3s ease-out';
-        strip.style.transform = `translateX(-50%) translateY(-${symbolObject.offset}px)`;
+        strip.style.transform = `translateX(-50%) translateY(-${symbolObject.offset}vh)`;
 
         if (isLast) {
             isSpinning = false;
@@ -131,9 +133,6 @@ function resetSlot(slot) {
     strip.style.transform = 'translateX(-50%) translateY(0)';
 }
 
-// Fonction que tu peux appeler depuis ton backend
-function setResults(backendResults) {
-    // Cette fonction peut être appelée avec les résultats de ton backend
-    // backendResults devrait être un array de 3 symboles
-    stopSlots(backendResults);
+function getSymbolHeight() {
+    return parseFloat(getComputedStyle(root).getPropertyValue('--symbol-height'));
 }

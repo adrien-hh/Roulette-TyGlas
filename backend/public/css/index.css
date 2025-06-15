@@ -1,3 +1,8 @@
+/* Mobile first : X-Small devices (portrait phones, less than 576px) */
+:root {
+    --symbol-height: 25vh;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,10 +11,17 @@
 
 body {
     background-image: url("../images/fond.svg");
-    background-size: cover;
+    background-size: 100vw 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
     text-align: center;
-    padding: 1.5rem;
-    position: static;
+    padding: 2rem 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 img {
@@ -18,7 +30,7 @@ img {
 }
 
 #titre {
-    width: 30vw;
+    height: 10%;
     z-index: 1;
     position: relative;
 }
@@ -30,7 +42,7 @@ img {
 #cartes1, #cartes2 {
     opacity: 0.7;
     position: absolute;
-    width: 40vw;
+    width: 50vw;
 }
 
 #cartes1 {
@@ -45,26 +57,20 @@ img {
 
 #div-roulette {
     position: relative;
-    width: 100%;
+    width: 100vw;
+    height: 45vh;
+    margin: 1rem auto;
 }
 
 #roulette {
     position: relative;
     z-index: 1;
-    width: 70vh;
-}
-
-#spin {
-    display: inline-block;
-}
-
-#spin, #spin>img {
-    width: 15vw;
+    height: 100%;
 }
 
 .slots-container {
     position: absolute;
-    top: 60%;
+    top: 27vh;
     left: 50%;
     transform: translate(-50%, -50%);
     transform-origin: center;
@@ -72,12 +78,12 @@ img {
     margin: 0 auto;
     justify-content: center;
     background-color: white;
-    width: 60vh;
-    height: 30vh;
+    width: 40vh;
+    height: var(--symbol-height);
 }
 
 .slot {
-    width: 30%;
+    width: 33%;
     height: 100%;
     overflow: hidden;
     position: relative;
@@ -85,7 +91,6 @@ img {
 
 .slot-images {
     position: absolute;
-    top: 10%;
     left: 50%;
     transform: translateX(-50%);
     width: 50%;
@@ -94,23 +99,30 @@ img {
 
 .slot-img {
     width: 100%;
-    height: 150px;
+    height: var(--symbol-height);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
     position: relative;
+}
+
+#spin {
+    display: inline-block;
+    height: 10%;
+}
+
+#spin>img {
+    height: 100%;
 }
 
 .result {
     z-index: 10;
     position: absolute;
-    top: 50%;
+    top: 42%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
-    width: 50vw;
-    height: 50vh;
+    width: 85vw;
     transition: transform 0.5s ease-out, opacity 0.5s ease-out;
 }
 
@@ -138,6 +150,93 @@ img {
     opacity: 0;
     pointer-events: none;
 }
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {
+    :root {
+        --symbol-height: 35vh;
+    }
+    body {
+        justify-content: space-evenly;
+    }
+    #titre {
+        height: 15%;
+    }
+    #div-roulette {
+        height: 65vh;
+        margin: 1rem auto;
+    }
+    #roulette {
+        height: 100%;
+    }
+    .slots-container {
+        top: 38vh;
+        width: 60vh;
+    }
+    #spin {
+        height: 15%;
+    }
+    #spin>img {
+        height: 100%;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+    .result {
+        top: 57%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+    #titre {
+        height: 18%;
+    }
+    #spin {
+        height: 12%;
+    }
+    .result {
+        width: 70vw;
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+    :root {
+        --symbol-height: 31vh;
+    }
+    body {
+        justify-content: space-evenly;
+    }
+    #titre {
+        height: 25%;
+    }
+    #div-roulette {
+        height: 55vh;
+        margin: 1rem auto;
+    }
+    #roulette {
+        height: 100%;
+    }
+    .slots-container {
+        top: 32vh;
+        width: 50vh;
+    }
+    #spin {
+        height: 15%;
+    }
+    .result {
+        top: 50%;
+        width: 50vw;
+    }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media screen and (min-width: 1400px) {
+
+}
+
 
 
 
