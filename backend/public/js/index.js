@@ -34,7 +34,6 @@ async function fetchResult() {
                 document.removeEventListener("click", reset);
             });
         }, 2000)
-        console.log('Résultat du spin :', data);
         return data;
     } catch (err) {
         console.error('Erreur lors de la requête POST :', err);
@@ -63,10 +62,8 @@ function spin() {
     setTimeout(async () => {
         const backendResult = await fetchResult();
         const resultCombination = (backendResult.combination);
-        console.log('Result combination : ', resultCombination);
-
         stopSlots(resultCombination);
-    }, 1000 + Math.random() * 1000); // Délai aléatoire pour plus de réalisme
+    }, 1000 + Math.random() * 1000);
 }
 
 function spinSlot(slot) {
@@ -108,8 +105,6 @@ function stopSlot(slot, targetSymbol, isLast, slotIndex) {
 
     const strip = slot.querySelector('.slot-images');
     const symbolObject = symbols.find(s => s.name === targetSymbol);
-    console.log("targetSymbol : ", targetSymbol)
-    console.log("symbolObject : ", symbolObject)
 
     if (!symbolObject) {
         console.error(`Symbole non trouvé : ${targetSymbol}`);

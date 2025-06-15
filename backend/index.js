@@ -65,14 +65,9 @@ app.get('/', function (req, res) {
 app.post('/spin', async (req, res) => {
 
     const rewards = await Reward.find({ quantity: { $gt: 0 } });
-    console.log('Rewards in DB : ', rewards);
     const symbols = ['biere', 'cafe', 'volant', 'crepe', 'buvette'];
-
     const reward = await selectRewardAndDecrement(rewards);
-    console.log('generateReward(rewards) : ', reward);
     const combination = generateSpinResult(reward, symbols);
-    console.log('generateSpinResult(reward, symbols) : ', combination);
-
     logResult(reward);
 
     res.json({

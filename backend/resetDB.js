@@ -23,11 +23,7 @@ async function resetData() {
         for (let reward of rewardsArray) {
             const newReward = new Reward(reward);
             await newReward.save();
-            console.log('Reward added successfully : ', reward);
         }
-
-        const data = await Reward.find({});
-        console.log('Reward collection : ', data);
 
     } catch (err) {
         console.error('MongoDB error :', err);
