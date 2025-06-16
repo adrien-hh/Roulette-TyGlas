@@ -1,6 +1,6 @@
 /* Mobile first : X-Small devices (portrait phones, less than 576px) */
 :root {
-    --symbol-height: 25vh;
+    --symbol-height: 20vh;
 }
 
 * {
@@ -33,6 +33,7 @@ img {
     height: 10vh;
     z-index: 1;
     position: relative;
+    max-width: 80vw;
 }
 
 #cartes {
@@ -66,6 +67,7 @@ img {
     position: relative;
     z-index: 1;
     height: 100%;
+    max-width: 100vw;
 }
 
 .slots-container {
@@ -79,6 +81,7 @@ img {
     justify-content: center;
     background-color: white;
     width: 40vh;
+    max-width: 80vw;
     height: var(--symbol-height);
 }
 
