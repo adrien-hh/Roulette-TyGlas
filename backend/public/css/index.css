@@ -72,7 +72,7 @@ img {
 
 .slots-container {
     position: absolute;
-    top: 27vh;
+    top: 26vh;
     left: 50%;
     transform: translate(-50%, -50%);
     transform-origin: center;
@@ -81,7 +81,7 @@ img {
     justify-content: center;
     background-color: white;
     width: 40vh;
-    max-width: 80vw;
+    max-width: 78vw;
     height: var(--symbol-height);
 }
 

@@ -1,0 +1,7 @@
+21:08:55 ; récompense : Des sous-bocks
+21:10:21 ; récompense : Perdu
+21:11:08 ; récompense : Un café/un thé
+21:12:16 ; récompense : Des sous-bocks
+21:12:20 ; récompense : Un café/un thé
+21:13:04 ; récompense : Un café/un thé
+21:13:18 ; récompense : Perdu

@@ -6,11 +6,11 @@ spinButton.addEventListener('click', spin);
 let isSpinning = false;
 const root = document.documentElement;
 const symbols = [
-    { name: 'biere', offset: 0 },
-    { name: 'cafe', offset: getSymbolHeight() },
-    { name: 'volant', offset: 2 * getSymbolHeight() },
-    { name: 'crepe', offset: 3 * getSymbolHeight() },
-    { name: 'buvette', offset: 4 * getSymbolHeight() }
+    {name: 'biere', offset: 0},
+    {name: 'cafe', offset: getSymbolHeight()},
+    {name: 'volant', offset: 2 * getSymbolHeight()},
+    {name: 'crepe', offset: 3 * getSymbolHeight()},
+    {name: 'buvette', offset: 4 * getSymbolHeight()}
 ];
 let spinningIntervals = [];
 
@@ -111,15 +111,13 @@ function stopSlot(slot, targetSymbol, isLast, slotIndex) {
         return;
     }
 
-    setTimeout(() => {
-        strip.style.transition = 'transform 0.3s ease-out';
-        strip.style.transform = `translateX(-50%) translateY(-${symbolObject.offset}vh)`;
+    strip.style.transition = 'transform 0.3s ease-out';
+    strip.style.transform = `translateX(-50%) translateY(-${symbolObject.offset}vh)`;
 
-        if (isLast) {
-            isSpinning = false;
-            spinButton.disabled = false;
-        }
-    }, 200);
+    if (isLast) {
+        isSpinning = false;
+        spinButton.disabled = false;
+    }
 }
 
 function resetSlot(slot) {
