@@ -16,13 +16,6 @@ mongoose.connect(process.env.MONGO_URI)
     .catch(err => console.error(err));
 
 const logPath = path.join(__dirname, 'public', 'logs', 'tirages.txt');
-fs.writeFile(logPath, '', err => {
-    if (err) {
-        console.error('Erreur lors de la réinitialisation du fichier de log :', err);
-    } else {
-        console.log('Fichier de log réinitialisé au démarrage.');
-    }
-});
 
 function generateReward(rewards) {
     const availableRewards = rewards.filter(reward => reward.quantity > 0);
@@ -76,9 +69,22 @@ app.post('/spin', async (req, res) => {
     });
 });
 
+app.post('/fakeSpin', async (req, res) => {
+
+    const rewards = await Reward.find({ quantity: { $gt: 0 } });
+    const symbols = ['biere', 'cafe', 'volant', 'crepe', 'buvette'];
+    const reward = await selectReward(rewards);
+    const combination = generateSpinResult(reward, symbols);
+
+    res.json({
+        combination: combination,
+        prize: reward ? reward?.combination : "perdu"
+    });
+});
+
 function logResult(reward) {
     const now = new Date();
-    const time = now.toLocaleTimeString("fr-FR");
+    const time = now.toLocaleString("fr-FR");
     const content = `${time} ; récompense : ${reward.reward}\n`;
     fs.appendFile(logPath, content, err => {
         if (err) {
@@ -101,6 +107,26 @@ async function selectRewardAndDecrement(rewards) {
 
         if (updatedReward) {
             return updatedReward;
+        } else {
+            rewards = rewards.filter(r => !r._id.equals(reward._id));
+        }
+    }
+    return null;
+}
+
+async function selectReward(rewards) {
+
+    while (rewards.length > 0) {
+        const reward = generateReward(rewards);
+        if (!reward) return null;
+
+        const rewardInDB = await Reward.findOne(
+            { _id: reward._id, quantity: { $gt: 0 } }
+
+        );
+
+        if (rewardInDB) {
+            return rewardInDB;
         } else {
             rewards = rewards.filter(r => !r._id.equals(reward._id));
         }

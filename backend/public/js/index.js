@@ -3,6 +3,8 @@
 // prize: "100"
 const spinButton = document.getElementById("spin");
 spinButton.addEventListener('click', spin);
+const testButton = document.getElementById("test");
+testButton.addEventListener("click", fakeSpin);
 let isSpinning = false;
 const root = document.documentElement;
 const symbols = [
@@ -117,6 +119,7 @@ function stopSlot(slot, targetSymbol, isLast, slotIndex) {
     if (isLast) {
         isSpinning = false;
         spinButton.disabled = false;
+        testButton.disabled = false;
     }
 }
 
@@ -128,4 +131,53 @@ function resetSlot(slot) {
 
 function getSymbolHeight() {
     return parseFloat(getComputedStyle(root).getPropertyValue('--symbol-height'));
+}
+
+/* Fake spin for tests : does not update database */
+function fakeSpin() {
+    if (isSpinning) return;
+
+    isSpinning = true;
+    spinButton.disabled = true;
+    testButton.disabled = true;
+    spinningIntervals = [];
+
+    for (let i = 1; i <= 3; i++) {
+        const slot = document.getElementById(`slot${i}`);
+        resetSlot(slot);
+        const interval = spinSlot(slot);
+        spinningIntervals.push(interval);
+    }
+
+    setTimeout(async () => {
+        const backendResult = await fetchFakeResult();
+        const resultCombination = (backendResult.combination);
+        stopSlots(resultCombination);
+    }, 1000 + Math.random() * 1000);
+}
+
+async function fetchFakeResult() {
+    try {
+        const response = await fetch('/fakeSpin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+
+        const data = await response.json();
+        setTimeout(() => {
+            toggleVisibility("shadow");
+            toggleVisibility(data.prize);
+            document.addEventListener("click", function reset() {
+                toggleVisibility(data.prize);
+                toggleVisibility("shadow");
+                document.removeEventListener("click", reset);
+            });
+        }, 2000)
+        return data;
+    } catch (err) {
+        console.error('Erreur lors de la requête POST :', err);
+    }
 }

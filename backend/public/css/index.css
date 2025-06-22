@@ -154,15 +154,18 @@ img {
     pointer-events: none;
 }
 
-#logs {
-    border-radius: 50%;
-
-    color: white;
-    padding: 5px;
+#buttons-div {
     position: absolute;
     bottom: 10px;
     right: 10px;
+}
+
+#logs, #test {
+    border-radius: 10%;
+    color: white;
+    padding: 5px;
     background-color: black;
+    cursor: pointer;
 }
 
 #logs>i {
