@@ -16,7 +16,7 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     text-align: center;
-    padding: 2rem 0;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -230,6 +230,7 @@ img {
     }
     body {
         justify-content: space-evenly;
+        padding: 2rem 0;
     }
     #titre {
         height: 18vh;
@@ -257,6 +258,8 @@ img {
 @media screen and (min-width: 1400px) {
 
 }
+
+
 
 
 
