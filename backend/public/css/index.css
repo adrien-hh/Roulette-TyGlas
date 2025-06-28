@@ -16,12 +16,17 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     text-align: center;
-    padding: 1rem 0 60px;
+    padding: 1rem 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+
+main {
+    padding-bottom: 60px;
+    position: relative;
 }
 
 img {
@@ -156,21 +161,24 @@ img {
 
 #buttons-div {
     position: absolute;
-    bottom: 10px;
+    bottom: 70px;
     right: 10px;
 }
 
 #logs, #test {
     border-radius: 10%;
     color: white;
-    padding: 5px;
+    padding: 10px;
     background-color: black;
     cursor: pointer;
 }
 
-#logs>i {
-    width: 20px;
-    height: 20px;
+#test {
+    font-size: 3vh;
+}
+
+#logs {
+    font-size: 3vh;
 }
 
 /* Small devices (landscape phones, 576px and up) */
