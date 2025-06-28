@@ -14,10 +14,10 @@ async function resetData() {
         await Reward.deleteMany();
 
         const rewardsArray = [
-            {combination: "biere", reward: "Des sous-bocks", quantity: 50, weight: 20},
-            {combination: "cafe", reward: "Un café/un thé", quantity: 500, weight: 22},
+            {combination: "biere", reward: "Des sous-bocks", quantity: 40, weight: 16},
+            {combination: "cafe", reward: "Un café/un thé", quantity: 500, weight: 24},
             {combination: "volant", reward: "Deux volants pour ton match !", quantity: 6, weight: 2.5},
-            {combination: "crepe", reward: "Une crêpe", quantity: 500, weight: 22},
+            {combination: "crepe", reward: "Une crêpe", quantity: 500, weight: 24},
             {combination: "buvette", reward: "Une carte buvette de 10€", quantity: 1, weight: 0.5},
             {combination: "perdu", reward: "Perdu", quantity: 10000, weight: 33}
         ];
