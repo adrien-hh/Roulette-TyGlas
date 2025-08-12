@@ -5,6 +5,7 @@ const express = require('express');
 const fs = require('node:fs');
 const app = express();
 const path = require('path');
+
 app.use(express.json());
 app.listen(process.env.port || 3000, () => console.log('Server launched on port 3000'));
 app.use('/fontawesome', express.static(__dirname + '/node_modules/@fortawesome/fontawesome-free'));
@@ -49,11 +50,9 @@ function generateSpinResult(resultReward, symbols) {
     return combination;
 }
 
-// Without middleware
 app.get('/', function (req, res) {
     res.render('index');
 });
-
 
 app.post('/spin', async (req, res) => {
 
@@ -122,7 +121,6 @@ async function selectReward(rewards) {
 
         const rewardInDB = await Reward.findOne(
             { _id: reward._id, quantity: { $gt: 0 } }
-
         );
 
         if (rewardInDB) {

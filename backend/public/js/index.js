@@ -1,12 +1,7 @@
-// data : Object { combination: (3) […], prize: "100" }
-// combination: Array(3) [ "bar", "bar", "bar" ]
-// prize: "100"
+const root = document.documentElement;
 const spinButton = document.getElementById("spin");
 spinButton.addEventListener('click', spin);
-const testButton = document.getElementById("test");
-testButton.addEventListener("click", fakeSpin);
-let isSpinning = false;
-const root = document.documentElement;
+
 const symbols = [
     {name: 'biere', offset: 0},
     {name: 'cafe', offset: getSymbolHeight()},
@@ -14,6 +9,7 @@ const symbols = [
     {name: 'crepe', offset: 3 * getSymbolHeight()},
     {name: 'buvette', offset: 4 * getSymbolHeight()}
 ];
+let isSpinning = false;
 let spinningIntervals = [];
 
 async function fetchResult() {
@@ -119,7 +115,6 @@ function stopSlot(slot, targetSymbol, isLast, slotIndex) {
     if (isLast) {
         isSpinning = false;
         spinButton.disabled = false;
-        testButton.disabled = false;
     }
 }
 
@@ -131,53 +126,4 @@ function resetSlot(slot) {
 
 function getSymbolHeight() {
     return parseFloat(getComputedStyle(root).getPropertyValue('--symbol-height'));
-}
-
-/* Fake spin for tests : does not update database */
-function fakeSpin() {
-    if (isSpinning) return;
-
-    isSpinning = true;
-    spinButton.disabled = true;
-    testButton.disabled = true;
-    spinningIntervals = [];
-
-    for (let i = 1; i <= 3; i++) {
-        const slot = document.getElementById(`slot${i}`);
-        resetSlot(slot);
-        const interval = spinSlot(slot);
-        spinningIntervals.push(interval);
-    }
-
-    setTimeout(async () => {
-        const backendResult = await fetchFakeResult();
-        const resultCombination = (backendResult.combination);
-        stopSlots(resultCombination);
-    }, 1000 + Math.random() * 1000);
-}
-
-async function fetchFakeResult() {
-    try {
-        const response = await fetch('/fakeSpin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({})
-        });
-
-        const data = await response.json();
-        setTimeout(() => {
-            toggleVisibility("shadow");
-            toggleVisibility(data.prize);
-            document.addEventListener("click", function reset() {
-                toggleVisibility(data.prize);
-                toggleVisibility("shadow");
-                document.removeEventListener("click", reset);
-            });
-        }, 2000)
-        return data;
-    } catch (err) {
-        console.error('Erreur lors de la requête POST :', err);
-    }
 }
